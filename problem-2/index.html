@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+ <div id="container">
+    <input type="text" id="search" placeholder="search by title..."/>
+
+
+    <select id="filter">
+
+        <option value="">filter by userID</option>
+        ${[...Array(10).keys()].map(i=>`<option value="${i+1}" >${i+1}</option>`).join("")}
+    </select>
+
+    <select id="sort">
+        <option value="">Sort</option>
+        <option value="titleAcs">Title A-Z</option>
+        <option value="titleDesc">Title Z-A</option>
+        <option value="idAsc">Post ID Asc </option>
+        <option value="idDesc">Post ID Desc</option>
+
+    </select>
+
+  </div>
+
+  <div id="postContainer" class="post-container"> </div>
+  <p id="noResult"></p>
+
+</body>
+</html>
+<script>
+     
+     let api="https://jsonplaceholder.typicode.com/posts";
+
+     let container=document.getElementById("postContainer");
+     let searchInput=document.getElementById("search");
+     let filterSelect=document.getElementById("filter");
+     let sort=document.getElementById("sort");
+     let noResult=document.getElementById("noResult");
+
+
+     async function onload(api) {
+         let res=await fetch(api);
+         let data=await res.json();
+         posts=data.slice(0,50);
+
+         console.log(posts)
+     }
+
+     function renderPost(list){
+        container.innerHTML="";
+
+        if(list.length===0){
+            noResult.style.display="block";
+            return;
+        }else{
+            noResult.style.display=none;
+        }
+     }
+
+      onload(api)
+</script>
